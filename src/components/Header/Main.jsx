@@ -8,24 +8,55 @@ import { useState } from "react"
 const Main = () => {
   const [input, setInput] = useState("")
   const [specificUsers, setSpecificUsers] = useState([])
-  // const { data: users, error, isError, isFetching, isPending } = useQuery({
-  //   queryKey: ["githubUsers", input],
-  //   queryFn: useFetchGithubUsers
-  // })
+  const [isLoading, setIsLoading] = useState("")
+  const [isError, setIsError] = useState("")
+
 
   const { getSpecificUser } = useGithubContext()
   async function handleSubmit(e) {
     e.preventDefault()
 
-
-    const data = await getSpecificUser(input)
-
-    setSpecificUsers(data.items)
+    try {
+      setIsLoading(true)
 
 
+      const data = await getSpecificUser(input)
+      console.log(data)
+
+
+      if (data.total_count > 0) {
+        setSpecificUsers(data.items)
+
+
+      }
+
+      else {
+        setIsError("No data found")
+      }
+
+    }
+    catch (err) {
+      setIsError(err.message)
+
+    }
+    finally {
+      setIsLoading(false)
+    }
 
 
 
+
+
+
+
+  }
+
+  if (isLoading) {
+    return <Loading />
+  }
+
+  if (isError) {
+    return <h1 className="text-3xl">Error: {isError}❌</h1>
   }
 
 
