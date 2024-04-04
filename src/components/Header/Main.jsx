@@ -7,41 +7,18 @@ import { useState } from "react"
 
 const Main = () => {
   const [input, setInput] = useState("")
-  const [specificUsers, setSpecificUsers] = useState([])
-  const [isLoading, setIsLoading] = useState("")
-  const [isError, setIsError] = useState("")
 
 
-  const { getSpecificUser } = useGithubContext()
+
+  const { users, error, isError, isFetching, isPending, handleSpecificUser } = useGithubContext()
+  console.log(users)
   async function handleSubmit(e) {
-    e.preventDefault()
-
-    try {
-      setIsLoading(true)
+    e.preventDefault();
+    handleSpecificUser(input)
 
 
-      const data = await getSpecificUser(input)
-      console.log(data)
 
 
-      if (data.total_count > 0) {
-        setSpecificUsers(data.items)
-
-
-      }
-
-      else {
-        setIsError("No data found")
-      }
-
-    }
-    catch (err) {
-      setIsError(err.message)
-
-    }
-    finally {
-      setIsLoading(false)
-    }
 
 
 
@@ -51,13 +28,20 @@ const Main = () => {
 
   }
 
-  if (isLoading) {
+  if (isPending) {
     return <Loading />
   }
 
   if (isError) {
-    return <h1 className="text-3xl">Error: {isError}❌</h1>
+    return <div>Error: {error.message}❌</div>
   }
+
+  if (isFetching) {
+    return <Loading />
+  }
+
+
+
 
 
 
@@ -91,10 +75,10 @@ const Main = () => {
       </div>
 
       {
-        specificUsers && <div className="container mx-auto grid
+        !users.items && <div className="container mx-auto grid
          grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 sm:w-[100%] mt-[-10rem]">
           {
-            specificUsers.map(user => (
+            users.map(user => (
               <UsersListItem key={user.id}
                 {...user}
               />
@@ -106,6 +90,28 @@ const Main = () => {
         </div>
 
 
+      }
+
+      {
+        users.items && <div className="container mx-auto grid
+         grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 sm:w-[100%] mt-[-10rem]">
+          {
+            users.items.map(user => (
+              <UsersListItem key={user.id}
+                {...user}
+              />
+
+            ))
+
+          }
+
+        </div>
+      }
+
+      {
+        !users.total_count && <div className="container mx-auto grid mb-10">
+          <h1 className="text-4xl text-center">No user found</h1>
+        </div>
       }
     </>
 
