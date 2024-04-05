@@ -5,6 +5,8 @@ import Main from './components/Header/Main'
 import { Routes, Route } from "react-router-dom"
 import About from './pages/About'
 import GithubProvider from './context/GithubProvider'
+import NotFound from './components/NotFound'
+import User from './pages/User'
 
 
 const App = () => {
@@ -15,6 +17,8 @@ const App = () => {
         <Routes>
           <Route path='/' element={<Main />} />
           <Route path="/about" element={<About />} />
+          <Route path = "/user/:name" element = {<User/>}/>
+          <Route path='*' element={<NotFound/>} />
 
 
         </Routes>

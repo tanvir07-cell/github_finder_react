@@ -21,6 +21,13 @@ const GithubProvider = ({ children }) => {
         queryFn: useFetchGithubUsers
     })
 
+    const {data:user,error:err,isError:isErr,isFetching:isFetch,isPending:isPend} = useQuery({
+        queryKey:["githubUser",specificUser,true],
+        queryFn:useFetchGithubUsers
+    })
+
+    console.log(user)
+
     const handleSpecificUser = (login) => {
         setSpecificUser(login)
     }
@@ -43,7 +50,13 @@ const GithubProvider = ({ children }) => {
             isFetching,
             isPending,
             isError,
-            handleSpecificUser
+            handleSpecificUser,
+            user,
+            err,
+            isErr,
+            isFetch,
+            isPend
+
 
         }}>{
                 children
