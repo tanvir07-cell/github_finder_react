@@ -7,6 +7,7 @@ const Navbar = () => {
     return (
         <div className='bg-cranberry-900 bg-opacity-50 backdrop-blur-lg backdrop-filter shadow-sm shadow-sinbad-200 sticky
         top-0 z-50
+
         '>
 
             <div className="container mx-auto navbar  flex justify-between items-center px-10">
@@ -31,7 +32,7 @@ const Navbar = () => {
 
                             <a className="text-xl"><FaGithub className='text-4xl' />
                             </a>
-                            <span className='sm:text-2xl'>Github Finder</span>
+                            <Link to="/" className='sm:text-2xl'>Github Finder</Link>
                         </div>
 
                     </div>

@@ -1,35 +1,25 @@
 import React from 'react'
 
 const useFetchGithubUsers = async ({ queryKey }) => {
-  let res = null;
-  if(!queryKey[1]){
-    res = await fetch(`${import.meta.env.VITE_GITHUB_API_URL}/users`, {
-      headers: {
-        Authorization: `Token ${import.meta.env.VITE_GITHUB_API_KEY}`
-      }
-    })
-  
-  }
+  let url = `${import.meta.env.VITE_GITHUB_API_URL}/users`
 
-  if(queryKey[1]){
-    res = await fetch(`${import.meta.env.VITE_GITHUB_API_URL}/search/users?q=${queryKey[1]}`, {
-      headers: {
-        Authorization: `Token ${import.meta.env.VITE_GITHUB_API_KEY}`
-      }
-    })
-  
-  }
-  
+  let res;
 
-  if(queryKey[1] && queryKey[2]){
-    res = await fetch(`${import.meta.env.VITE_GITHUB_API_URL}/users/${queryKey[1]}`, {
-      headers: {
-        Authorization: `Token ${import.meta.env.VITE_GITHUB_API_KEY}`
+  if (queryKey.length === 3 && queryKey[1] && queryKey[2]) {
+        url = `${import.meta.env.VITE_GITHUB_API_URL}/users/${queryKey[1]}`;
+      } 
+      // Condition to search for users
+      else if (queryKey.length >= 2 && queryKey[1]) {
+        url = `${import.meta.env.VITE_GITHUB_API_URL}/search/users?q=${queryKey[1]}`;
       }
-    })
-  }
 
   
+  res = await fetch(url,{
+    headers: {
+      'Authorization': `token ${import.meta.env.VITE_GITHUB_API_KEY}`
+    }
+  
+  });
   
 
   

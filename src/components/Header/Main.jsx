@@ -50,19 +50,8 @@ const Main = () => {
 
 
   return (
-    // <div className='container mx-auto grid
-    // grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 
-    // '>
-    //   {
-    //     users.map(user => (
-    //       <UsersListItem key={user.id}
-    //         {...user}
-    //       />
+    
 
-    //     ))
-    //   }
-
-    // </div>
     <>
       <div className='container mx-auto flex items-center justify-center mt-10 mb-10 h-[85vh]'>
         <form className="join" onSubmit={handleSubmit}>
@@ -75,7 +64,7 @@ const Main = () => {
       </div>
 
       {
-        !users.items && <div className="container mx-auto grid
+        (!users.items ) && <div className="container mx-auto grid
          grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 sm:w-[100%] mt-[-10rem]">
           {
             users.map(user => (
@@ -109,7 +98,7 @@ const Main = () => {
       }
 
       {
-        !users.total_count && <div className="container mx-auto grid mb-10">
+        users.total_count===0 && <div className="container mx-auto grid mb-10">
           <h1 className="text-4xl text-center">No user found</h1>
         </div>
       }
